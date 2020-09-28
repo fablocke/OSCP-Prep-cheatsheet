@@ -1,19 +1,19 @@
 # Scanning 
-````
+
 ### NMAP TCP quick 
-
+````
 > sudo nmap -Pn -v -sS -sV -sC -oN tcp-quick.nmap IP
-
+````
 ### NMAP TCP Full 
-
+````
 > sudo nmap -Pn -sS --stats-every 3m --max-retries 1 --max-scan-delay 20 --defeat-rst-ratelimit -T4 -p1-65535 -oN tcp-full.nmap IP 
-
+````
 ### NMAP TCP - Repeat if extra ports found 
-
+````
 > sudo nmap -Pn -v -sS -A -oN tcp-extra.nmap -p PORTS IP 
-
+````
 ### NMAP UDP quick 
-
+````
 > sudo nmap -Pn -v -sU -sV -oN udp-quick.nmap IP
 ````
 ### NMAP UDP 1000 
@@ -77,6 +77,39 @@ Indication that its a DC
 ````
 > sudo nmap -sS -Pn -sV --script=ldap* -p389,636,3268,3269  
 ````
+### WEB - PORT 80 / 443 
+
+NMAP Web 
+````
+> sudo nmap -Pn -sC -p80,443 
+
+````
+Checks 
+````
+Check Certificates for hostname
+Check robots.txt
+Check sitemap.xml
+Check for known software - View source 
+Check for default credentials 
+Check for input validation - SQLi
+Check for OS Command execution
+Check for LFI / RFI 
+````
+Dirb 
+````
+> dirb IP
+> dirb IP -a  'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/42.0.2311.135 Safari/537.36 Edge/12.246'
+````
+Gobuster 
+````
+> gobuster dir --url IP --wordlist /usr/share/seclists/Discovery/Web-Content/big.txt
+> gobuster dir --url IP --wordlist /usr/share/seclists/Discovery/Web-Content/big.txt -k -a 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/42.0.2311.135 Safari/537.36 Edge/12.246'
+````
+Nikto 
+````
+> nikto -host IP
+````
+
 
 ### SMB - Ports 
 NMAP vuln scripts
