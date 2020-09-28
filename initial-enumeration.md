@@ -43,6 +43,10 @@ Check for write access
 ````
 Check for SSH version vulns
 Check for User enumeration if necessary 
+Check if host key was seen somewhere else 
+Check if it prompts for a password - means password login is allowed for some users
+nmap -sV --script=ssh-hostkey -p22 IP
+Bruteforce if necessary with CeWL, Hydra, Patator, Crowbar, MSF (if port gets filtered, there's defense mechanisms - fail2ban) 
 ````
 
 ### Telnet - Port 23
@@ -86,6 +90,10 @@ NMAP Web
 ````
 Checks 
 ````
+Browse the webapp 
+Check for usernames, keywords 
+Check Web server vulns
+Check for Cgi's shellshock
 Check Certificates for hostname
 Check robots.txt
 Check sitemap.xml
