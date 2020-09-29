@@ -54,6 +54,10 @@ Connect and check for service running
 
 ### SMTP - Port 25
 Check for SMTP vulns 
+Check version with HELO / HELLO <domain>  
+
+### POP - PORT 110 
+
 
 ### DNS - Port 53 
 ````
@@ -177,7 +181,12 @@ Upload / Download specific files
 > smbmap -H <TARGET-IP> --download 'Replication\active.htb\ 
 > smbmap -H <TARGET-IP> --upload test.txt SHARENAME/test.txt 
 ````
-
+### NFS - Port 2049 
+````
+> showmount -e IP 
+> mount -t nfs -o vers=3 10.1.1.1:/home/ ~/home
+> mount -t nfs4 -o proto=tcp,port=2049 127.0.0.1:/srv/Share mountpoint
+````
 
 
 
