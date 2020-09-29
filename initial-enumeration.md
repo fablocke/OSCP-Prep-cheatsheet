@@ -57,6 +57,13 @@ Check for SMTP vulns
 Check version with HELO / HELLO <domain>  
 
 ### POP - PORT 110 
+````
+Connect using telnet 
+user <username> 
+pass <pass> 
+LIST - to list emails 
+RETR <email numbr> - To retrieve emails 
+````
 
 
 ### DNS - Port 53 
