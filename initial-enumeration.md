@@ -14,7 +14,7 @@
 ````
 ### NMAP UDP quick 
 ````
-> sudo nmap -Pn -v -sU -sV -oN udp-quick.nmap IP
+> sudo nmap -Pn -v -sU -sV --top-ports=20 -oN udp-quick.nmap IP
 ````
 ### NMAP UDP 1000 
 ````
