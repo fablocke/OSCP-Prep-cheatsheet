@@ -79,6 +79,7 @@ Indication that its a DC
 ````
 > nmblookup -A IP
 > nbtscan IP 
+> On older hosts, this port servers SMB / SAMBA, scan by adding 'client min protocol = LANMAN1' to GLOBAL setting in /etc/samba/smb.conf or by using --option='client min protocol'=LANMAN1 with smbclient
 ````
 
 ### RPC - PORT 135 
