@@ -195,8 +195,12 @@ Upload / Download specific files
 > mount -t nfs4 -o proto=tcp,port=2049 127.0.0.1:/srv/Share mountpoint
 ````
 
-
-
+### TFTPD - UDP 69
+````
+> tftp client to connect
+> atftp is a better client 
+> Can be used to read system files, MSSQL password mdf file
+````
 
 
 
