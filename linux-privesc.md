@@ -165,4 +165,16 @@ docker run -it --volume /:/mnt alpine:latest chroot /mnt
 Overwite etc/passwd inside docker to gain root 
 ````
 
+## Custom binaries with SUID / Sudo 
+```
+Check for shared libraries missing 
+Refer - https://www.boiteaklou.fr/Abusing-Shared-Libraries.html 
+Search for miising libraries -> strace /usr/local/bin/exec 2>&1 | grep -i -E "open|access|no such file" 
 
+```
+
+## SSH bad keys attack
+```
+If Authorized_keys is readable, check the publick key content in debian-ssh github for private keys - refer Payload all the things
+
+```
