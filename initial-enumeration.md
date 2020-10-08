@@ -204,6 +204,13 @@ Upload / Download specific files
 > Can be used to read system files, MSSQL password mdf file
 ````
 
+### Finding exploits 
+````
+Search on EDB and searchsploit
+Check each service on CVE details for RCE / LFI / RFI / SQLI issues 
+Google search the with the service banner 
+````
+
 
 
 
