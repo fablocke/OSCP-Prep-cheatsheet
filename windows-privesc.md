@@ -31,6 +31,15 @@ route print
 arp -A  
 ````
 
+### Checklist automated tools 
+````
+Run winpeas 
+Run PowerUp.ps1
+Run Sherlock.ps1
+accesschk.exe /accepteula -wvu
+
+
+````
 ### Scheduled Tasks  
 ````
 schtasks /query /fo LIST /v  # Copy to schtasks.txt on local and run -> cat schtask.txt | grep "SYSTEM\|Task To Run" | grep -B 1 SYSTEM  
