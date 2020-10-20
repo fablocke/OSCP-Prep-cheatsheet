@@ -6,7 +6,7 @@
 ````
 ### NMAP TCP Full 
 ````
-> sudo nmap -Pn -sS --stats-every 3m --max-retries 1 --max-scan-delay 20 --defeat-rst-ratelimit -T4 -p1-65535 -oN tcp-full.nmap IP 
+> sudo nmap -Pn -sS --stats-every 3m --max-retries 1 --max-scan-delay 20 --defeat-rst-ratelimit -T4 -p1-65535 -oN tcp-full.nmap -sV IP 
 ````
 ### NMAP TCP - Repeat if extra ports found 
 ````
@@ -14,7 +14,7 @@
 ````
 ### NMAP UDP quick 
 ````
-> sudo nmap -Pn -v -sU -sV --top-ports=20 -oN udp-quick.nmap IP
+> sudo nmap -Pn -v -sU -sV --top-ports=30 -oN udp-quick.nmap IP
 ````
 ### NMAP UDP 1000 
 ````
