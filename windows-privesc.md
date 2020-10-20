@@ -40,6 +40,23 @@ dir %SystemRoot%\Tasks
 e.g. c:\windows\tasks\  
 e.g. c:\windows\system32\tasks\  
 ````
+
+### Startups and autoruns 
+````
+reg query HKCU\Software\Microsoft\Windows\CurrentVersion\Run
+reg query HKLM\Software\Microsoft\Windows\CurrentVersion\Run
+
+wmic startup get caption,command
+reg query HKLM\Software\Microsoft\Windows\CurrentVersion\R
+reg query HKCU\Software\Microsoft\Windows\CurrentVersion\RunOnce
+dir "C:\Documents and Settings\All Users\Start Menu\Programs\Startup"
+dir "C:\Documents and Settings\%username%\Start Menu\Programs\Startup"
+
+Check access on the file using accesschk 
+accesschk64.exe /accepteula -wvu "C:\Program Files\Autorun Program"
+````
+
+
 ### Service Permissions  
 Check if service config can be modified  
 
