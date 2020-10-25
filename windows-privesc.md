@@ -78,8 +78,7 @@ WinPEAS.exe /.bat *
 Seatbelt.exe 
 Watson.exe * 
 Sharpup.exe 
-./unix-privesc-check
-./windows-privesc-check2.exe --dump -G
+windows-privesc-check2.exe --dump -G
 
 #Powershell 
 Sherlock.ps1 * 
