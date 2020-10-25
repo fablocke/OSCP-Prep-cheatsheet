@@ -17,6 +17,7 @@ Get-ChildItem "C:\Program Files" -Recurse | Get-ACL | ?{$_.AccessToString -match
 ##Services 
 sc query state=all | findstr "SERVICE_NAME:"
 wmic service get name,displayname,pathname,startmode 
+Get-WmiObject win32_service | Select-Object Name, State, PathName | Where-Object {$_.State -like 'Running'}
 
 
 ## Volume
