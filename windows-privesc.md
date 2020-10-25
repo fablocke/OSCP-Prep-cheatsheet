@@ -5,8 +5,24 @@
 ````
 systeminfo  
 Systeminfo | findstr /B /C:"OS Name" /C:"System Type"  etc .. 
+## Updates
 wmic qfe get Caption,Description,HotFixID,InstalledOn
 Wmic logicaldisk get caption,description 
+
+##Applications
+wmic product get name, version, vendor
+accesschk.exe -uws "Everyone" "C:\Program Files"
+Get-ChildItem "C:\Program Files" -Recurse | Get-ACL | ?{$_.AccessToString -match "Everyone\sAllow\s\sModify"}
+
+## Volume
+mountvol
+
+
+## Drivers - in powershell
+driverquery.exe /v /fo csv | ConvertFrom-CSV | Select-Object ‘Display Name’, ‘Start Mode’, Path
+Get-WmiObject Win32_PnPSignedDriver | Select-Object DeviceName, DriverVersion, Manufacturer | Where-Object {$_.DeviceName -like "*VMware*"}
+
+
 
 whoami  
 echo %USERNAME%  
