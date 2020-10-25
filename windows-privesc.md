@@ -78,11 +78,14 @@ WinPEAS.exe /.bat *
 Seatbelt.exe 
 Watson.exe * 
 Sharpup.exe 
+./unix-privesc-check
+./windows-privesc-check2.exe --dump -G
 
 #Powershell 
 Sherlock.ps1 * 
 PowerUp.ps1 * 
 jaws-enumps1 * 
+
 
 #Other 
 Windows-exploit-suggester.py *
