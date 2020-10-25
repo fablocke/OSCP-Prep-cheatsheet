@@ -14,6 +14,11 @@ wmic product get name, version, vendor
 accesschk.exe -uws "Everyone" "C:\Program Files"
 Get-ChildItem "C:\Program Files" -Recurse | Get-ACL | ?{$_.AccessToString -match "Everyone\sAllow\s\sModify"}
 
+##Services 
+sc query state=all | findstr "SERVICE_NAME:"
+wmic service get name,displayname,pathname,startmode 
+
+
 ## Volume
 mountvol
 
