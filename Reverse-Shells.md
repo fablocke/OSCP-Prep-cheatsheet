@@ -1,4 +1,4 @@
-## Reference - Referred from vaiours online sources PayloadAllTheThings
+## Reference - Refererd from vaiours online sources PayloadAllTheThings
 
 
 ## INITIAL ENTRY 
